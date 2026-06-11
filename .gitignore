@@ -18,6 +18,14 @@ desktop.ini
 # Logs
 *.log
 
+# Node
+node_modules/
+.wrangler/
+dist/
+cookies.txt
+headers.txt
+signup*.html
+
 # Environment / secrets
 .env
 .env.*
