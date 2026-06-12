@@ -16,6 +16,38 @@ interface LayoutOpts {
   extraScripts?: string;
 }
 
+function fishSvg(): string {
+  return `<svg class="fish-svg" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="fish-tail">
+      <path class="fish-fin" d="M16 25 L3 11 L8 21 Z"/>
+      <path class="fish-fin" d="M16 25 L3 39 L8 29 Z"/>
+    </g>
+    <path class="fish-body" d="M16 25 C16 14 30 9 50 9 C72 9 86 15 91 22 C94 25 94 25 91 28 C86 35 72 41 50 41 C30 41 16 36 16 25 Z"/>
+    <path class="fish-belly" d="M28 27 C42 35 62 35 80 27 C68 38 48 40 32 36 C28 34 28 27 28 27 Z"/>
+    <path class="fish-fin fish-dorsal" d="M36 11 L48 3 L58 11 Z"/>
+    <path class="fish-fin fish-fin-soft" d="M60 12 L67 7 L73 12 Z"/>
+    <path class="fish-fin fish-pectoral" d="M68 28 L76 38 L68 35 Z"/>
+    <path class="fish-fin fish-ventral" d="M42 37 L48 45 L54 37 Z"/>
+    <path class="fish-stripe" d="M40 13 L40 35"/>
+    <path class="fish-stripe" d="M50 12 L50 36"/>
+    <path class="fish-stripe" d="M60 13 L60 35"/>
+    <path class="fish-gill" d="M74 17 Q77 25 74 33"/>
+    <circle class="fish-eye-bg" cx="84" cy="23" r="4.5"/>
+    <circle class="fish-eye" cx="85.2" cy="23" r="2.2"/>
+    <circle class="fish-eye-shine" cx="86" cy="22" r="0.8"/>
+    <path class="fish-mouth" d="M91 24.5 Q94 25.5 91 26.5"/>
+    <g class="fish-lure">
+      <path class="fish-lure-stalk" d="M89 16 Q84 8 79 3"/>
+      <circle class="fish-lure-glow" cx="79" cy="3" r="3.5"/>
+      <circle class="fish-lure-core" cx="79" cy="3" r="1.5"/>
+    </g>
+  </svg>`;
+}
+
+function fish(classes: string): string {
+  return `<span class="fish ${classes}">${fishSvg()}</span>`;
+}
+
 function nav(session: SessionData | null): string {
   const loggedIn = !!(session && session.userId > 0);
   const user = loggedIn
@@ -76,14 +108,14 @@ export function layout(opts: LayoutOpts): string {
       <span class="deep-glow g3"></span>
     </div>
     <div class="fish-layer">
-      <span class="fish f1"></span>
-      <span class="fish f2 rev"></span>
-      <span class="fish f3 sm"></span>
-      <span class="fish f4 rev lg"></span>
-      <span class="fish f5"></span>
-      <span class="fish f6 rev sm"></span>
-      <span class="fish f7"></span>
-      <span class="fish f8 rev angler"></span>
+      ${fish("f1")}
+      ${fish("f2 rev")}
+      ${fish("f3 sm")}
+      ${fish("f4 rev lg")}
+      ${fish("f5")}
+      ${fish("f6 rev sm")}
+      ${fish("f7")}
+      ${fish("f8 rev angler")}
     </div>
     <div class="mushroom-layer">
       <span class="mushroom m1"></span>

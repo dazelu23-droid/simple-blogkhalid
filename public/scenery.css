@@ -116,7 +116,7 @@
 [data-theme="dark"] .wave-2 { bottom: 26%; }
 [data-theme="dark"] .wave-3 { bottom: 20%; }
 
-/* ── Fish layer ── */
+/* ── Fish layer (SVG) ── */
 .fish-layer {
   position: absolute;
   inset: 0;
@@ -125,45 +125,103 @@
 .fish {
   position: absolute;
   display: block;
-  width: 52px;
-  height: 26px;
-  opacity: 0.88;
+  width: 64px;
+  height: 32px;
+  opacity: 0.92;
   animation: fish-swim-l 28s linear infinite;
-  transition: opacity 0.6s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+  transition: opacity 0.6s ease, filter 0.6s ease;
 }
 
-.fish::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50% 45% 50% 40%;
-  background: linear-gradient(
-    160deg,
-    var(--fish-belly) 0%,
-    var(--fish-body) 45%,
-    var(--fish-fin) 100%
-  );
-  box-shadow:
-    inset -4px -2px 8px rgba(0, 0, 0, 0.12),
-    8px 2px 0 -1px var(--fish-stripe),
-    -6px 4px 0 -2px var(--fish-stripe),
-    14px 0 0 -10px #1a1a2e;
-  transition: background 0.6s ease, box-shadow 0.6s ease;
+.fish-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-.fish::after {
-  content: "";
-  position: absolute;
-  right: -10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 14px solid var(--fish-fin);
-  filter: drop-shadow(-1px 1px 0 rgba(0, 0, 0, 0.08));
-  transition: border-left-color 0.6s ease;
+.fish-body {
+  fill: var(--fish-body);
+  stroke: color-mix(in srgb, var(--fish-fin) 80%, black);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+
+.fish-belly {
+  fill: var(--fish-belly);
+  opacity: 0.75;
+}
+
+.fish-fin {
+  fill: var(--fish-fin);
+  stroke: color-mix(in srgb, var(--fish-fin) 60%, black);
+  stroke-width: 0.4;
+  stroke-linejoin: round;
+}
+
+.fish-fin-soft {
+  opacity: 0.85;
+}
+
+.fish-dorsal {
+  filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.15));
+}
+
+.fish-stripe {
+  fill: none;
+  stroke: var(--fish-stripe);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.fish-gill,
+.fish-mouth {
+  fill: none;
+  stroke: color-mix(in srgb, var(--fish-fin) 65%, black);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
+.fish-eye-bg {
+  fill: #fff;
+  stroke: color-mix(in srgb, var(--fish-fin) 50%, black);
+  stroke-width: 0.5;
+}
+
+.fish-eye {
+  fill: #1a2438;
+}
+
+.fish-eye-shine {
+  fill: rgba(255, 255, 255, 0.85);
+}
+
+.fish-tail {
+  transform-origin: 16px 25px;
+  animation: tail-wag 0.55s ease-in-out infinite;
+}
+
+.fish-lure {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fish-lure-stalk {
+  fill: none;
+  stroke: color-mix(in srgb, var(--fish-fin) 70%, black);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.fish-lure-glow {
+  fill: var(--fish-glow);
+  opacity: 0;
+}
+
+.fish-lure-core {
+  fill: #fff;
+  opacity: 0;
 }
 
 .fish.rev {
@@ -171,29 +229,15 @@
 }
 
 .fish.sm {
-  width: 36px;
-  height: 18px;
-  opacity: 0.75;
-}
-
-.fish.sm::after {
-  border-top-width: 5px;
-  border-bottom-width: 5px;
-  border-left-width: 10px;
-  right: -7px;
+  width: 44px;
+  height: 22px;
+  opacity: 0.8;
 }
 
 .fish.lg {
-  width: 68px;
-  height: 34px;
-  opacity: 0.92;
-}
-
-.fish.lg::after {
-  border-top-width: 11px;
-  border-bottom-width: 11px;
-  border-left-width: 18px;
-  right: -13px;
+  width: 84px;
+  height: 42px;
+  opacity: 0.95;
 }
 
 .f1 { bottom: 38%; animation-duration: 32s; animation-delay: 0s; }
@@ -206,79 +250,98 @@
 .f8 { bottom: 42%; animation-duration: 40s; animation-delay: -10s; }
 
 @keyframes fish-swim-l {
-  0% { transform: translateX(-80px); }
-  100% { transform: translateX(calc(100vw + 80px)); }
+  0% { transform: translateX(-90px); }
+  100% { transform: translateX(calc(100vw + 90px)); }
 }
 
 @keyframes fish-swim-r {
-  0% { transform: translateX(calc(100vw + 80px)) scaleX(-1); }
-  100% { transform: translateX(-80px) scaleX(-1); }
+  0% { transform: translateX(calc(100vw + 90px)) scaleX(-1); }
+  100% { transform: translateX(-90px) scaleX(-1); }
+}
+
+@keyframes tail-wag {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(6deg); }
 }
 
 /* Deep-sea fish — dark theme */
 [data-theme="dark"] .fish {
-  opacity: 0.82;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--fish-glow) 25%, transparent));
 }
 
-[data-theme="dark"] .fish::before {
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--fish-belly) 80%, black) 0%,
-    var(--fish-body) 50%,
-    var(--fish-fin) 100%
-  );
-  box-shadow:
-    inset -4px -2px 10px rgba(0, 0, 0, 0.45),
-    6px 2px 0 -1px var(--fish-stripe),
-    -4px 5px 0 -2px var(--fish-stripe),
-    0 0 10px color-mix(in srgb, var(--fish-glow) 35%, transparent),
-    14px 0 0 -10px var(--fish-glow);
+[data-theme="dark"] .fish-body {
+  fill: var(--fish-body);
+  stroke: color-mix(in srgb, var(--fish-glow) 40%, var(--fish-fin));
+}
+
+[data-theme="dark"] .fish-belly {
+  fill: var(--fish-belly);
+  opacity: 0.6;
+}
+
+[data-theme="dark"] .fish-stripe {
+  stroke: var(--fish-stripe);
+  opacity: 0.85;
+  filter: drop-shadow(0 0 3px var(--fish-glow));
+}
+
+[data-theme="dark"] .fish-eye-bg {
+  fill: rgba(210, 245, 255, 0.95);
+  filter: drop-shadow(0 0 4px var(--fish-glow));
+}
+
+[data-theme="dark"] .fish-eye {
+  fill: var(--fish-glow);
+  filter: drop-shadow(0 0 5px var(--fish-glow));
+}
+
+[data-theme="dark"] .fish-svg {
   animation: fish-glow-pulse 4s ease-in-out infinite;
 }
 
-[data-theme="dark"] .fish::after {
-  border-left-color: var(--fish-fin);
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--fish-glow) 40%, transparent));
+[data-theme="dark"] .fish.angler .fish-lure {
+  opacity: 1;
 }
 
-[data-theme="dark"] .fish.sm::before {
-  box-shadow:
-    inset -3px -2px 8px rgba(0, 0, 0, 0.45),
-    4px 1px 0 -1px var(--fish-stripe),
-    0 0 6px color-mix(in srgb, var(--fish-glow) 30%, transparent),
-    10px 0 0 -8px var(--fish-glow);
+[data-theme="dark"] .fish.angler .fish-lure-glow {
+  opacity: 0.9;
+  fill: var(--fish-glow);
+  filter: drop-shadow(0 0 8px var(--fish-glow));
+  animation: lure-pulse 2.5s ease-in-out infinite;
 }
 
-@keyframes fish-glow-pulse {
-  0%, 100% {
-    filter: brightness(0.95);
-  }
-  50% {
-    filter: brightness(1.15);
-  }
+[data-theme="dark"] .fish.angler .fish-lure-core {
+  opacity: 1;
 }
 
-/* Anglerfish — deep-sea lure on f8 */
-[data-theme="dark"] .fish.angler::before {
-  box-shadow:
-    inset -4px -2px 10px rgba(0, 0, 0, 0.5),
-    5px 3px 0 -1px var(--fish-stripe),
-    -5px 6px 0 -2px var(--fish-stripe),
-    0 0 12px color-mix(in srgb, var(--fish-glow) 40%, transparent),
-    12px 0 0 -9px var(--fish-glow),
-    -22px -10px 0 -4px var(--fish-glow),
-    -24px -12px 8px 2px color-mix(in srgb, var(--fish-glow) 70%, transparent);
-  animation: fish-glow-pulse 3s ease-in-out infinite, lure-bob 2.5s ease-in-out infinite;
+[data-theme="dark"] .fish.angler .fish-lure-stalk {
+  stroke: color-mix(in srgb, var(--fish-glow) 60%, var(--fish-fin));
 }
 
-@keyframes lure-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+[data-theme="dark"] .fish.angler .fish-lure {
+  animation: lure-bob 2.5s ease-in-out infinite;
+  transform-origin: 89px 16px;
 }
 
 [data-theme="dark"] .fish.angler {
-  width: 58px;
-  height: 30px;
+  width: 72px;
+  height: 36px;
+}
+
+@keyframes fish-glow-pulse {
+  0%, 100% { filter: brightness(0.92); }
+  50% { filter: brightness(1.12); }
+}
+
+@keyframes lure-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes lure-bob {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg); }
 }
 
 /* ── Mushroom layer ── */
@@ -414,8 +477,10 @@
   .mushroom,
   .deep-glow,
   .fish,
+  .fish-tail,
+  .fish-svg,
   [data-theme="dark"] .mushroom::before,
-  [data-theme="dark"] .fish::before {
+  [data-theme="dark"] .fish.angler .fish-lure-glow {
     animation: none !important;
   }
 }
