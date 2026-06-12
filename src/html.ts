@@ -37,7 +37,10 @@ function nav(session: SessionData | null): string {
         <a href="/search">Search</a>
         ${newPost}
         ${user}
-        <button type="button" id="theme-toggle" class="btn btn-ghost theme-toggle" aria-label="Toggle theme">🌓</button>
+        <label class="theme-picker">
+          <span class="theme-picker-label">Theme</span>
+          <select id="theme-select" class="theme-select" aria-label="Choose page color theme"></select>
+        </label>
       </nav>
     </div>
   </header>`;

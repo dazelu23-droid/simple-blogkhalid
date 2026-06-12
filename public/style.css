@@ -27,6 +27,84 @@
   --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
+[data-theme="warm-sunset"] {
+  --bg: #fff5f0;
+  --surface: #fffaf7;
+  --text: #3d2318;
+  --muted: #8b6f60;
+  --accent: #e86f4a;
+  --accent-hover: #d4572f;
+  --danger: #c93636;
+  --border: #f0ddd4;
+  --shadow: 0 2px 12px rgba(232, 111, 74, 0.1);
+  --shadow-hover: 0 8px 24px rgba(232, 111, 74, 0.16);
+}
+
+[data-theme="warm-honey"] {
+  --bg: #fffbeb;
+  --surface: #fffef5;
+  --text: #3d3218;
+  --muted: #8b7355;
+  --accent: #d4880f;
+  --accent-hover: #b87300;
+  --danger: #c93636;
+  --border: #efe4c8;
+  --shadow: 0 2px 12px rgba(212, 136, 15, 0.1);
+  --shadow-hover: 0 8px 24px rgba(212, 136, 15, 0.16);
+}
+
+[data-theme="warm-rose"] {
+  --bg: #fff5f7;
+  --surface: #fffbfc;
+  --text: #3d1828;
+  --muted: #8b6070;
+  --accent: #d4567a;
+  --accent-hover: #b83d62;
+  --danger: #c93636;
+  --border: #f0d4dc;
+  --shadow: 0 2px 12px rgba(212, 86, 122, 0.1);
+  --shadow-hover: 0 8px 24px rgba(212, 86, 122, 0.16);
+}
+
+[data-theme="cool-ocean"] {
+  --bg: #f0f7ff;
+  --surface: #f8fbff;
+  --text: #152838;
+  --muted: #5a7088;
+  --accent: #2d8fd8;
+  --accent-hover: #1a75bb;
+  --danger: #e03e3e;
+  --border: #d4e4f0;
+  --shadow: 0 2px 12px rgba(45, 143, 216, 0.1);
+  --shadow-hover: 0 8px 24px rgba(45, 143, 216, 0.16);
+}
+
+[data-theme="cool-mint"] {
+  --bg: #f0faf5;
+  --surface: #f7fcf9;
+  --text: #183828;
+  --muted: #5a8870;
+  --accent: #2da87a;
+  --accent-hover: #1f8f66;
+  --danger: #e03e3e;
+  --border: #d4f0e4;
+  --shadow: 0 2px 12px rgba(45, 168, 122, 0.1);
+  --shadow-hover: 0 8px 24px rgba(45, 168, 122, 0.16);
+}
+
+[data-theme="cool-lavender"] {
+  --bg: #f5f3ff;
+  --surface: #faf9ff;
+  --text: #282038;
+  --muted: #6a6088;
+  --accent: #7c5dd4;
+  --accent-hover: #6344bb;
+  --danger: #e03e3e;
+  --border: #e4dcf0;
+  --shadow: 0 2px 12px rgba(124, 93, 212, 0.1);
+  --shadow-hover: 0 8px 24px rgba(124, 93, 212, 0.16);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0.01ms !important;
@@ -88,6 +166,35 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 .nav-user { color: var(--muted); font-size: 0.9rem; }
 
 .nav-form { display: inline; margin: 0; }
+
+.theme-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.theme-picker-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.theme-select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-height: 44px;
+  transition: var(--transition);
+}
+
+.theme-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 .container {
   max-width: var(--max-width);
