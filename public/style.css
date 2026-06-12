@@ -12,19 +12,39 @@
   --radius: 12px;
   --max-width: 720px;
   --transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  --sea-top: #c8e6fa;
+  --sea-mid: #8ec5e8;
+  --sea-deep: #5a9fd4;
+  --sea-wave: rgba(255, 255, 255, 0.45);
+  --bubble-fill: rgba(255, 255, 255, 0.55);
+  --shroom-cap: #e05a52;
+  --shroom-cap-spot: rgba(255, 255, 255, 0.35);
+  --shroom-stem: #f5ebe0;
+  --shroom-glow: transparent;
+  --deep-glow: transparent;
 }
 
 [data-theme="dark"] {
-  --bg: #0f1117;
-  --surface: #1a1d26;
+  --bg: #050810;
+  --surface: #121a28;
   --text: #e8eaef;
   --muted: #9aa0ad;
   --accent: #6b8cff;
   --accent-hover: #8aa4ff;
   --danger: #ff6b6b;
-  --border: #2d3140;
+  --border: #1e2a3d;
   --shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --sea-top: #020610;
+  --sea-mid: #061428;
+  --sea-deep: #0a2040;
+  --sea-wave: rgba(30, 120, 200, 0.18);
+  --bubble-fill: rgba(80, 200, 255, 0.25);
+  --shroom-cap: #1a2840;
+  --shroom-cap-spot: rgba(100, 220, 255, 0.5);
+  --shroom-stem: #0d1520;
+  --shroom-glow: #4fc3f7;
+  --deep-glow: #29b6f6;
 }
 
 [data-theme="warm-sunset"] {
@@ -38,6 +58,14 @@
   --border: #f0ddd4;
   --shadow: 0 2px 12px rgba(232, 111, 74, 0.1);
   --shadow-hover: 0 8px 24px rgba(232, 111, 74, 0.16);
+  --sea-top: #ffe0cc;
+  --sea-mid: #ffb899;
+  --sea-deep: #f09068;
+  --sea-wave: rgba(255, 240, 220, 0.5);
+  --bubble-fill: rgba(255, 220, 190, 0.55);
+  --shroom-cap: #e86840;
+  --shroom-cap-spot: rgba(255, 230, 200, 0.45);
+  --shroom-stem: #ffe8d8;
 }
 
 [data-theme="warm-honey"] {
@@ -51,6 +79,14 @@
   --border: #efe4c8;
   --shadow: 0 2px 12px rgba(212, 136, 15, 0.1);
   --shadow-hover: 0 8px 24px rgba(212, 136, 15, 0.16);
+  --sea-top: #fff0b8;
+  --sea-mid: #f5d878;
+  --sea-deep: #e8c050;
+  --sea-wave: rgba(255, 248, 210, 0.55);
+  --bubble-fill: rgba(255, 240, 180, 0.5);
+  --shroom-cap: #c87818;
+  --shroom-cap-spot: rgba(255, 235, 180, 0.45);
+  --shroom-stem: #fff5d8;
 }
 
 [data-theme="warm-rose"] {
@@ -64,6 +100,14 @@
   --border: #f0d4dc;
   --shadow: 0 2px 12px rgba(212, 86, 122, 0.1);
   --shadow-hover: 0 8px 24px rgba(212, 86, 122, 0.16);
+  --sea-top: #ffd8e4;
+  --sea-mid: #f5a8c0;
+  --sea-deep: #e888a8;
+  --sea-wave: rgba(255, 230, 240, 0.5);
+  --bubble-fill: rgba(255, 210, 225, 0.55);
+  --shroom-cap: #d45888;
+  --shroom-cap-spot: rgba(255, 220, 235, 0.45);
+  --shroom-stem: #ffe8f0;
 }
 
 [data-theme="cool-ocean"] {
@@ -77,6 +121,14 @@
   --border: #d4e4f0;
   --shadow: 0 2px 12px rgba(45, 143, 216, 0.1);
   --shadow-hover: 0 8px 24px rgba(45, 143, 216, 0.16);
+  --sea-top: #b8dff8;
+  --sea-mid: #6eb8e8;
+  --sea-deep: #3898d8;
+  --sea-wave: rgba(220, 245, 255, 0.55);
+  --bubble-fill: rgba(200, 235, 255, 0.6);
+  --shroom-cap: #3a90c8;
+  --shroom-cap-spot: rgba(210, 240, 255, 0.45);
+  --shroom-stem: #e8f4fc;
 }
 
 [data-theme="cool-mint"] {
@@ -90,6 +142,14 @@
   --border: #d4f0e4;
   --shadow: 0 2px 12px rgba(45, 168, 122, 0.1);
   --shadow-hover: 0 8px 24px rgba(45, 168, 122, 0.16);
+  --sea-top: #c0f0d8;
+  --sea-mid: #78d8a8;
+  --sea-deep: #48b880;
+  --sea-wave: rgba(220, 255, 235, 0.5);
+  --bubble-fill: rgba(200, 245, 220, 0.55);
+  --shroom-cap: #38a868;
+  --shroom-cap-spot: rgba(210, 255, 230, 0.45);
+  --shroom-stem: #e8f8ef;
 }
 
 [data-theme="cool-lavender"] {
@@ -103,6 +163,14 @@
   --border: #e4dcf0;
   --shadow: 0 2px 12px rgba(124, 93, 212, 0.1);
   --shadow-hover: 0 8px 24px rgba(124, 93, 212, 0.16);
+  --sea-top: #ddd0ff;
+  --sea-mid: #b898f0;
+  --sea-deep: #9878e0;
+  --sea-wave: rgba(235, 225, 255, 0.5);
+  --bubble-fill: rgba(220, 210, 255, 0.55);
+  --shroom-cap: #8868d0;
+  --shroom-cap-spot: rgba(230, 220, 255, 0.45);
+  --shroom-stem: #f0ecff;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -122,8 +190,24 @@ body {
   line-height: 1.6;
   transition: var(--transition);
   min-height: 100vh;
+  position: relative;
 }
 
+.site-header,
+.container,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.post-card,
+.auth-card,
+.form-card,
+.comment,
+.easter-egg-hints {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(6px);
+}
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-hover); text-decoration: underline; }
 
@@ -247,7 +331,6 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 }
 
 .post-card {
-  background: var(--surface);
   border-radius: var(--radius);
   padding: 1.5rem;
   margin-bottom: 1.25rem;
@@ -321,7 +404,6 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 .comments-section { margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
 .comment-list { list-style: none; padding: 0; margin: 1rem 0 0; }
 .comment {
-  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1rem;
@@ -358,7 +440,6 @@ a:hover { color: var(--accent-hover); text-decoration: underline; }
 }
 
 .auth-card, .form-card {
-  background: var(--surface);
   border-radius: var(--radius);
   padding: 2rem;
   box-shadow: var(--shadow);

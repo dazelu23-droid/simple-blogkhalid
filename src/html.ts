@@ -57,8 +57,33 @@ export function layout(opts: LayoutOpts): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${esc(opts.title)} — Simple Blog</title>
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/scenery.css">
 </head>
 <body>
+  <div class="scene-bg" aria-hidden="true">
+    <div class="sea-layer">
+      <div class="wave wave-1"></div>
+      <div class="wave wave-2"></div>
+      <div class="wave wave-3"></div>
+      <span class="bubble b1"></span>
+      <span class="bubble b2"></span>
+      <span class="bubble b3"></span>
+      <span class="bubble b4"></span>
+      <span class="bubble b5"></span>
+      <span class="bubble b6"></span>
+      <span class="deep-glow g1"></span>
+      <span class="deep-glow g2"></span>
+      <span class="deep-glow g3"></span>
+    </div>
+    <div class="mushroom-layer">
+      <span class="mushroom m1"></span>
+      <span class="mushroom m2"></span>
+      <span class="mushroom m3"></span>
+      <span class="mushroom m4"></span>
+      <span class="mushroom m5"></span>
+      <span class="mushroom m6"></span>
+    </div>
+  </div>
   ${nav(opts.session)}
   <main class="container">${opts.body}</main>
   <footer class="site-footer">
