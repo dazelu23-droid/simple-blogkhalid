@@ -116,6 +116,171 @@
 [data-theme="dark"] .wave-2 { bottom: 26%; }
 [data-theme="dark"] .wave-3 { bottom: 20%; }
 
+/* ── Fish layer ── */
+.fish-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.fish {
+  position: absolute;
+  display: block;
+  width: 52px;
+  height: 26px;
+  opacity: 0.88;
+  animation: fish-swim-l 28s linear infinite;
+  transition: opacity 0.6s ease;
+}
+
+.fish::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50% 45% 50% 40%;
+  background: linear-gradient(
+    160deg,
+    var(--fish-belly) 0%,
+    var(--fish-body) 45%,
+    var(--fish-fin) 100%
+  );
+  box-shadow:
+    inset -4px -2px 8px rgba(0, 0, 0, 0.12),
+    8px 2px 0 -1px var(--fish-stripe),
+    -6px 4px 0 -2px var(--fish-stripe),
+    14px 0 0 -10px #1a1a2e;
+  transition: background 0.6s ease, box-shadow 0.6s ease;
+}
+
+.fish::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 14px solid var(--fish-fin);
+  filter: drop-shadow(-1px 1px 0 rgba(0, 0, 0, 0.08));
+  transition: border-left-color 0.6s ease;
+}
+
+.fish.rev {
+  animation-name: fish-swim-r;
+}
+
+.fish.sm {
+  width: 36px;
+  height: 18px;
+  opacity: 0.75;
+}
+
+.fish.sm::after {
+  border-top-width: 5px;
+  border-bottom-width: 5px;
+  border-left-width: 10px;
+  right: -7px;
+}
+
+.fish.lg {
+  width: 68px;
+  height: 34px;
+  opacity: 0.92;
+}
+
+.fish.lg::after {
+  border-top-width: 11px;
+  border-bottom-width: 11px;
+  border-left-width: 18px;
+  right: -13px;
+}
+
+.f1 { bottom: 38%; animation-duration: 32s; animation-delay: 0s; }
+.f2 { bottom: 52%; animation-duration: 26s; animation-delay: -8s; }
+.f3 { bottom: 44%; animation-duration: 22s; animation-delay: -4s; }
+.f4 { bottom: 60%; animation-duration: 38s; animation-delay: -12s; }
+.f5 { bottom: 30%; animation-duration: 30s; animation-delay: -6s; }
+.f6 { bottom: 48%; animation-duration: 20s; animation-delay: -15s; }
+.f7 { bottom: 35%; animation-duration: 34s; animation-delay: -20s; }
+.f8 { bottom: 42%; animation-duration: 40s; animation-delay: -10s; }
+
+@keyframes fish-swim-l {
+  0% { transform: translateX(-80px); }
+  100% { transform: translateX(calc(100vw + 80px)); }
+}
+
+@keyframes fish-swim-r {
+  0% { transform: translateX(calc(100vw + 80px)) scaleX(-1); }
+  100% { transform: translateX(-80px) scaleX(-1); }
+}
+
+/* Deep-sea fish — dark theme */
+[data-theme="dark"] .fish {
+  opacity: 0.82;
+}
+
+[data-theme="dark"] .fish::before {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--fish-belly) 80%, black) 0%,
+    var(--fish-body) 50%,
+    var(--fish-fin) 100%
+  );
+  box-shadow:
+    inset -4px -2px 10px rgba(0, 0, 0, 0.45),
+    6px 2px 0 -1px var(--fish-stripe),
+    -4px 5px 0 -2px var(--fish-stripe),
+    0 0 10px color-mix(in srgb, var(--fish-glow) 35%, transparent),
+    14px 0 0 -10px var(--fish-glow);
+  animation: fish-glow-pulse 4s ease-in-out infinite;
+}
+
+[data-theme="dark"] .fish::after {
+  border-left-color: var(--fish-fin);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--fish-glow) 40%, transparent));
+}
+
+[data-theme="dark"] .fish.sm::before {
+  box-shadow:
+    inset -3px -2px 8px rgba(0, 0, 0, 0.45),
+    4px 1px 0 -1px var(--fish-stripe),
+    0 0 6px color-mix(in srgb, var(--fish-glow) 30%, transparent),
+    10px 0 0 -8px var(--fish-glow);
+}
+
+@keyframes fish-glow-pulse {
+  0%, 100% {
+    filter: brightness(0.95);
+  }
+  50% {
+    filter: brightness(1.15);
+  }
+}
+
+/* Anglerfish — deep-sea lure on f8 */
+[data-theme="dark"] .fish.angler::before {
+  box-shadow:
+    inset -4px -2px 10px rgba(0, 0, 0, 0.5),
+    5px 3px 0 -1px var(--fish-stripe),
+    -5px 6px 0 -2px var(--fish-stripe),
+    0 0 12px color-mix(in srgb, var(--fish-glow) 40%, transparent),
+    12px 0 0 -9px var(--fish-glow),
+    -22px -10px 0 -4px var(--fish-glow),
+    -24px -12px 8px 2px color-mix(in srgb, var(--fish-glow) 70%, transparent);
+  animation: fish-glow-pulse 3s ease-in-out infinite, lure-bob 2.5s ease-in-out infinite;
+}
+
+@keyframes lure-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+[data-theme="dark"] .fish.angler {
+  width: 58px;
+  height: 30px;
+}
+
 /* ── Mushroom layer ── */
 .mushroom-layer {
   position: absolute;
@@ -240,6 +405,7 @@
 @media (max-width: 600px) {
   .m1, .m6 { opacity: 0.6; transform: scale(0.85); }
   .deep-glow { opacity: 0.35; }
+  .f4, .f7 { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -247,7 +413,9 @@
   .bubble,
   .mushroom,
   .deep-glow,
-  [data-theme="dark"] .mushroom::before {
+  .fish,
+  [data-theme="dark"] .mushroom::before,
+  [data-theme="dark"] .fish::before {
     animation: none !important;
   }
 }

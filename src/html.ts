@@ -75,6 +75,16 @@ export function layout(opts: LayoutOpts): string {
       <span class="deep-glow g2"></span>
       <span class="deep-glow g3"></span>
     </div>
+    <div class="fish-layer">
+      <span class="fish f1"></span>
+      <span class="fish f2 rev"></span>
+      <span class="fish f3 sm"></span>
+      <span class="fish f4 rev lg"></span>
+      <span class="fish f5"></span>
+      <span class="fish f6 rev sm"></span>
+      <span class="fish f7"></span>
+      <span class="fish f8 rev angler"></span>
+    </div>
     <div class="mushroom-layer">
       <span class="mushroom m1"></span>
       <span class="mushroom m2"></span>

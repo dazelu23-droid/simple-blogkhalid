@@ -22,6 +22,11 @@
   --shroom-stem: #f5ebe0;
   --shroom-glow: transparent;
   --deep-glow: transparent;
+  --fish-body: #5a9fd4;
+  --fish-fin: #3d85c0;
+  --fish-belly: #a8d4f8;
+  --fish-stripe: rgba(255, 255, 255, 0.4);
+  --fish-glow: transparent;
 }
 
 [data-theme="dark"] {
@@ -45,6 +50,11 @@
   --shroom-stem: #0d1520;
   --shroom-glow: #4fc3f7;
   --deep-glow: #29b6f6;
+  --fish-body: #0c1a32;
+  --fish-fin: #060e1c;
+  --fish-belly: #142840;
+  --fish-stripe: rgba(79, 195, 247, 0.75);
+  --fish-glow: #4fc3f7;
 }
 
 [data-theme="warm-sunset"] {
@@ -66,6 +76,11 @@
   --shroom-cap: #e86840;
   --shroom-cap-spot: rgba(255, 230, 200, 0.45);
   --shroom-stem: #ffe8d8;
+  --fish-body: #f07850;
+  --fish-fin: #d85838;
+  --fish-belly: #ffc0a0;
+  --fish-stripe: rgba(255, 230, 200, 0.5);
+  --fish-glow: transparent;
 }
 
 [data-theme="warm-honey"] {
@@ -87,6 +102,11 @@
   --shroom-cap: #c87818;
   --shroom-cap-spot: rgba(255, 235, 180, 0.45);
   --shroom-stem: #fff5d8;
+  --fish-body: #e8b030;
+  --fish-fin: #c89018;
+  --fish-belly: #ffe898;
+  --fish-stripe: rgba(255, 245, 200, 0.55);
+  --fish-glow: transparent;
 }
 
 [data-theme="warm-rose"] {
@@ -108,6 +128,11 @@
   --shroom-cap: #d45888;
   --shroom-cap-spot: rgba(255, 220, 235, 0.45);
   --shroom-stem: #ffe8f0;
+  --fish-body: #e86898;
+  --fish-fin: #c84878;
+  --fish-belly: #ffb8d0;
+  --fish-stripe: rgba(255, 220, 235, 0.5);
+  --fish-glow: transparent;
 }
 
 [data-theme="cool-ocean"] {
@@ -129,6 +154,11 @@
   --shroom-cap: #3a90c8;
   --shroom-cap-spot: rgba(210, 240, 255, 0.45);
   --shroom-stem: #e8f4fc;
+  --fish-body: #3898d8;
+  --fish-fin: #2878b8;
+  --fish-belly: #90d0f8;
+  --fish-stripe: rgba(200, 240, 255, 0.55);
+  --fish-glow: transparent;
 }
 
 [data-theme="cool-mint"] {
@@ -150,6 +180,11 @@
   --shroom-cap: #38a868;
   --shroom-cap-spot: rgba(210, 255, 230, 0.45);
   --shroom-stem: #e8f8ef;
+  --fish-body: #38b878;
+  --fish-fin: #289860;
+  --fish-belly: #98e8c0;
+  --fish-stripe: rgba(210, 255, 230, 0.5);
+  --fish-glow: transparent;
 }
 
 [data-theme="cool-lavender"] {
@@ -171,6 +206,11 @@
   --shroom-cap: #8868d0;
   --shroom-cap-spot: rgba(230, 220, 255, 0.45);
   --shroom-stem: #f0ecff;
+  --fish-body: #9878e0;
+  --fish-fin: #7858c8;
+  --fish-belly: #c8b8f8;
+  --fish-stripe: rgba(230, 220, 255, 0.5);
+  --fish-glow: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
