@@ -48,8 +48,8 @@ function nav(session: SessionData | null): string {
 
 export function layout(opts: LayoutOpts): string {
   const scripts = opts.extraScripts
-    ? `<script src="/theme.js" defer></script>${opts.extraScripts}`
-    : `<script src="/theme.js" defer></script>`;
+    ? `<script src="/theme.js" defer></script><script src="/secret-game.js" defer></script>${opts.extraScripts}`
+    : `<script src="/theme.js" defer></script><script src="/secret-game.js" defer></script>`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
