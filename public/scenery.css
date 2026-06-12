@@ -304,7 +304,7 @@
   opacity: 1;
 }
 
-[data-theme="dark"] .fish.angler .fish-lure-glow {
+[data-theme="dark"] .coral-tip,`r`n  [data-theme="dark"] .anemone-tip,`r`n  [data-theme="dark"] .fish.angler .fish-lure-glow {
   opacity: 0.9;
   fill: var(--fish-glow);
   filter: drop-shadow(0 0 8px var(--fish-glow));
@@ -342,6 +342,168 @@
 @keyframes lure-bob {
   0%, 100% { transform: rotate(0deg); }
   50% { transform: rotate(-8deg); }
+}
+
+
+/* Coral and flora layer */
+.flora-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.flora {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+  animation: flora-sway 7s ease-in-out infinite;
+}
+
+.flora-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.coral-stem,
+.coral-branch {
+  fill: none;
+  stroke: var(--coral-main);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.coral-tip {
+  fill: var(--coral-light);
+  stroke: var(--coral-accent);
+  stroke-width: 1;
+}
+
+.coral-brain {
+  fill: var(--coral-main);
+  stroke: var(--coral-accent);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.coral-brain-light {
+  fill: var(--coral-light);
+  opacity: 0.65;
+}
+
+.flora-stem,
+.flora-blade {
+  fill: none;
+  stroke: var(--flora-stem);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.flora-blade {
+  stroke: var(--flora-main);
+  stroke-width: 2.5;
+  opacity: 0.9;
+}
+
+.flora-tip-dot {
+  fill: var(--flora-tip);
+}
+
+.anemone-base {
+  fill: var(--coral-main);
+  opacity: 0.85;
+}
+
+.anemone-tentacle {
+  fill: none;
+  stroke: var(--coral-light);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.anemone-tip {
+  fill: var(--coral-accent);
+}
+
+.flora-branch { width: 56px; height: 72px; }
+.flora-brain { width: 72px; height: 46px; }
+.flora-seaweed { width: 42px; height: 88px; }
+.flora-anemone { width: 52px; height: 62px; }
+
+.flora.sm { animation-name: flora-sway-sm; }
+.flora.tall { height: 110px; width: 52px; }
+
+.fl1 { left: 2%; animation-delay: 0s; }
+.fl2 { left: 14%; animation-delay: -1.5s; }
+.fl3 { left: 26%; animation-delay: -2.8s; }
+.fl4 { left: 48%; animation-delay: -0.6s; }
+.fl5 { left: 62%; animation-delay: -3.2s; }
+.fl6 { left: 74%; animation-delay: -1.8s; }
+.fl7 { left: 84%; animation-delay: -2.2s; }
+.fl8 { left: 92%; animation-delay: -4s; }
+
+@keyframes flora-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes flora-sway-sm {
+  0%, 100% { transform: scale(0.72) rotate(-2deg); }
+  50% { transform: scale(0.72) rotate(2deg); }
+}
+
+[data-theme="dark"] .flora {
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--flora-glow) 30%, transparent));
+}
+
+[data-theme="dark"] .coral-stem,
+[data-theme="dark"] .coral-branch {
+  stroke: var(--coral-main);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--coral-accent) 50%, transparent));
+}
+
+[data-theme="dark"] .coral-tip {
+  fill: color-mix(in srgb, var(--coral-accent) 70%, var(--coral-light));
+  filter: drop-shadow(0 0 6px var(--coral-accent));
+  animation: coral-tip-pulse 3s ease-in-out infinite;
+}
+
+[data-theme="dark"] .coral-brain {
+  fill: var(--coral-main);
+  stroke: var(--coral-accent);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--coral-accent) 40%, transparent));
+}
+
+[data-theme="dark"] .coral-brain-light {
+  fill: color-mix(in srgb, var(--coral-accent) 35%, var(--coral-light));
+  opacity: 0.8;
+}
+
+[data-theme="dark"] .flora-blade {
+  stroke: var(--flora-main);
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--flora-glow) 35%, transparent));
+}
+
+[data-theme="dark"] .flora-tip-dot,
+[data-theme="dark"] .anemone-tip {
+  fill: var(--flora-glow);
+  filter: drop-shadow(0 0 8px var(--flora-glow));
+  animation: coral-tip-pulse 2.5s ease-in-out infinite;
+}
+
+[data-theme="dark"] .anemone-tentacle {
+  stroke: color-mix(in srgb, var(--flora-glow) 50%, var(--coral-light));
+  opacity: 0.85;
+}
+
+@keyframes coral-tip-pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
 }
 
 /* ── Mushroom layer ── */
@@ -469,6 +631,7 @@
   .m1, .m6 { opacity: 0.6; transform: scale(0.85); }
   .deep-glow { opacity: 0.35; }
   .f4, .f7 { display: none; }
+  .fl8 { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -476,10 +639,13 @@
   .bubble,
   .mushroom,
   .deep-glow,
+  .flora,
   .fish,
   .fish-tail,
   .fish-svg,
   [data-theme="dark"] .mushroom::before,
+  [data-theme="dark"] .coral-tip,
+  [data-theme="dark"] .anemone-tip,
   [data-theme="dark"] .fish.angler .fish-lure-glow {
     animation: none !important;
   }

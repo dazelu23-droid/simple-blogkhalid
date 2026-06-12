@@ -27,7 +27,15 @@
   --fish-belly: #a8d4f8;
   --fish-stripe: rgba(255, 255, 255, 0.4);
   --fish-glow: transparent;
+  --coral-main: #f07868;
+  --coral-light: #ffc0b0;
+  --coral-accent: #e05848;
+  --flora-main: #389868;
+  --flora-stem: #287848;
+  --flora-tip: #58c090;
+  --flora-glow: transparent;
 }
+
 
 [data-theme="dark"] {
   --bg: #050810;
@@ -55,7 +63,15 @@
   --fish-belly: #142840;
   --fish-stripe: rgba(79, 195, 247, 0.75);
   --fish-glow: #4fc3f7;
+  --coral-main: #142038;
+  --coral-light: #1e3050;
+  --coral-accent: #4fc3f7;
+  --flora-main: #0a1830;
+  --flora-stem: #061020;
+  --flora-tip: #29b6f6;
+  --flora-glow: #4fc3f7;
 }
+
 
 [data-theme="warm-sunset"] {
   --bg: #fff5f0;
@@ -81,6 +97,13 @@
   --fish-belly: #ffc0a0;
   --fish-stripe: rgba(255, 230, 200, 0.5);
   --fish-glow: transparent;
+  --coral-main: #f08860;
+  --coral-light: #ffc8a8;
+  --coral-accent: #e86840;
+  --flora-main: #c87848;
+  --flora-stem: #a86038;
+  --flora-tip: #f0a878;
+  --flora-glow: transparent;
 }
 
 [data-theme="warm-honey"] {
@@ -107,6 +130,13 @@
   --fish-belly: #ffe898;
   --fish-stripe: rgba(255, 245, 200, 0.55);
   --fish-glow: transparent;
+  --coral-main: #e8b040;
+  --coral-light: #ffe898;
+  --coral-accent: #d09820;
+  --flora-main: #b89030;
+  --flora-stem: #987820;
+  --flora-tip: #e8c860;
+  --flora-glow: transparent;
 }
 
 [data-theme="warm-rose"] {
@@ -133,6 +163,13 @@
   --fish-belly: #ffb8d0;
   --fish-stripe: rgba(255, 220, 235, 0.5);
   --fish-glow: transparent;
+  --coral-main: #f07898;
+  --coral-light: #ffc0d8;
+  --coral-accent: #e05880;
+  --flora-main: #d06888;
+  --flora-stem: #b05070;
+  --flora-tip: #f0a0c0;
+  --flora-glow: transparent;
 }
 
 [data-theme="cool-ocean"] {
@@ -159,6 +196,13 @@
   --fish-belly: #90d0f8;
   --fish-stripe: rgba(200, 240, 255, 0.55);
   --fish-glow: transparent;
+  --coral-main: #f07088;
+  --coral-light: #ffb0c0;
+  --coral-accent: #e85070;
+  --flora-main: #2898c8;
+  --flora-stem: #1878a8;
+  --flora-tip: #58c0f0;
+  --flora-glow: transparent;
 }
 
 [data-theme="cool-mint"] {
@@ -185,6 +229,13 @@
   --fish-belly: #98e8c0;
   --fish-stripe: rgba(210, 255, 230, 0.5);
   --fish-glow: transparent;
+  --coral-main: #48a878;
+  --coral-light: #90e8b8;
+  --coral-accent: #308860;
+  --flora-main: #289868;
+  --flora-stem: #187848;
+  --flora-tip: #68d8a0;
+  --flora-glow: transparent;
 }
 
 [data-theme="cool-lavender"] {
@@ -211,6 +262,13 @@
   --fish-belly: #c8b8f8;
   --fish-stripe: rgba(230, 220, 255, 0.5);
   --fish-glow: transparent;
+  --coral-main: #b898f0;
+  --coral-light: #ddd0ff;
+  --coral-accent: #9878e0;
+  --flora-main: #8868d0;
+  --flora-stem: #6850b0;
+  --flora-tip: #b8a0f8;
+  --flora-glow: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {

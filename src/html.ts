@@ -48,6 +48,61 @@ function fish(classes: string): string {
   return `<span class="fish ${classes}">${fishSvg()}</span>`;
 }
 
+function coralBranchSvg(): string {
+  return `<svg class="flora-svg" viewBox="0 0 70 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="coral-stem" d="M35 90 L35 52"/>
+    <path class="coral-branch" d="M35 68 L18 48 M35 60 L52 42 M35 52 L22 32 M35 48 L48 28"/>
+    <circle class="coral-tip" cx="18" cy="48" r="5"/>
+    <circle class="coral-tip" cx="52" cy="42" r="4.5"/>
+    <circle class="coral-tip" cx="22" cy="32" r="4"/>
+    <circle class="coral-tip" cx="48" cy="28" r="3.5"/>
+  </svg>`;
+}
+
+function coralBrainSvg(): string {
+  return `<svg class="flora-svg" viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="coral-brain" d="M8 42 Q18 28 28 38 Q38 24 48 36 Q58 22 68 38 Q58 46 38 44 Q18 48 8 42 Z"/>
+    <path class="coral-brain-light" d="M20 38 Q28 32 36 38 Q28 42 20 38 Z"/>
+    <path class="coral-brain-light" d="M44 36 Q52 30 58 36 Q52 40 44 36 Z"/>
+  </svg>`;
+}
+
+function seaweedSvg(): string {
+  return `<svg class="flora-svg" viewBox="0 0 50 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="flora-stem" d="M25 110 Q27 70 25 30"/>
+    <path class="flora-blade" d="M25 95 Q8 80 12 55 Q20 75 25 95"/>
+    <path class="flora-blade" d="M25 80 Q42 65 38 40 Q30 60 25 80"/>
+    <path class="flora-blade" d="M25 60 Q10 48 14 25 Q22 42 25 60"/>
+    <path class="flora-blade" d="M25 45 Q40 32 36 12 Q28 28 25 45"/>
+    <ellipse class="flora-tip-dot" cx="25" cy="18" rx="4" ry="6"/>
+  </svg>`;
+}
+
+function anemoneSvg(): string {
+  return `<svg class="flora-svg" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse class="anemone-base" cx="30" cy="62" rx="16" ry="7"/>
+    <path class="anemone-tentacle" d="M14 62 Q10 40 16 18"/>
+    <path class="anemone-tentacle" d="M22 62 Q20 38 24 14"/>
+    <path class="anemone-tentacle" d="M30 62 Q30 36 30 10"/>
+    <path class="anemone-tentacle" d="M38 62 Q40 38 36 14"/>
+    <path class="anemone-tentacle" d="M46 62 Q50 40 44 18"/>
+    <circle class="anemone-tip" cx="16" cy="18" r="2.5"/>
+    <circle class="anemone-tip" cx="24" cy="14" r="2.5"/>
+    <circle class="anemone-tip" cx="30" cy="10" r="3"/>
+    <circle class="anemone-tip" cx="36" cy="14" r="2.5"/>
+    <circle class="anemone-tip" cx="44" cy="18" r="2.5"/>
+  </svg>`;
+}
+
+function flora(kind: string, classes: string): string {
+  let svg = "";
+  if (kind === "branch") svg = coralBranchSvg();
+  else if (kind === "brain") svg = coralBrainSvg();
+  else if (kind === "seaweed") svg = seaweedSvg();
+  else svg = anemoneSvg();
+  return `<span class="flora flora-${kind} ${classes}">${svg}</span>`;
+}
+
 function nav(session: SessionData | null): string {
   const loggedIn = !!(session && session.userId > 0);
   const user = loggedIn
@@ -117,6 +172,17 @@ export function layout(opts: LayoutOpts): string {
       ${fish("f7")}
       ${fish("f8 rev angler")}
     </div>
+    <div class="flora-layer">
+      ${flora("branch", "fl1")}
+      ${flora("brain", "fl2")}
+      ${flora("seaweed", "fl3 tall")}
+      ${flora("anemone", "fl4")}
+      ${flora("branch", "fl5 sm")}
+      ${flora("seaweed", "fl6")}
+      ${flora("brain", "fl7 sm")}
+      ${flora("anemone", "fl8 sm")}
+    </div>
+
     <div class="mushroom-layer">
       <span class="mushroom m1"></span>
       <span class="mushroom m2"></span>
