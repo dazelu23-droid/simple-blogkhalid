@@ -31,7 +31,7 @@ function nav(session: SessionData | null): string {
     : "";
   return `<header class="site-header">
     <div class="header-inner">
-      <a href="/" class="logo">Simple Blog</a>
+      <a href="/" class="logo" title="Some secrets are typed, not clicked">Simple Blog</a>
       <nav class="main-nav">
         <a href="/">Home</a>
         <a href="/search">Search</a>
@@ -63,6 +63,18 @@ export function layout(opts: LayoutOpts): string {
   <main class="container">${opts.body}</main>
   <footer class="site-footer">
     <p>&copy; 2026 Simple Blog</p>
+    <p class="easter-egg-hint">
+      <button type="button" id="hint-toggle" class="hint-toggle" aria-expanded="false" aria-controls="easter-egg-hints">
+        🎮 Hidden surprise?
+      </button>
+    </p>
+    <div id="easter-egg-hints" class="easter-egg-hints" hidden>
+      <p class="hint-lead">Enter this key sequence on any page:</p>
+      <p class="konami-display" aria-label="Up, Up, Down, Down, Left, Right, Left, Right, B, A">
+        <span>↑</span><span>↑</span><span>↓</span><span>↓</span><span>←</span><span>→</span><span>←</span><span>→</span><span>B</span><span>A</span>
+      </p>
+      <p class="hint-detail">Unlock <strong>Post Catcher</strong> — catch 📄 posts and ⭐ stars, dodge 🗑️ trash. Use arrow keys or drag to move.</p>
+    </div>
   </footer>
   ${scripts}
 </body>
@@ -89,6 +101,7 @@ export function indexPage(
            <img src="https://images.unsplash.com/photo-1499750310107-5fef28fd666f?w=600&h=300&fit=crop" alt="Empty blog desk" width="600" height="300" class="empty-img">
            <h1>Welcome to Simple Blog</h1>
            <p>No posts yet. Be the first to share something!</p>
+           <p class="empty-hint">While you wait… check the footer for a hidden surprise. 🎮</p>
          </div>`
       : `<h1 class="page-title">Latest Posts</h1>
          <div class="post-list">${posts.map(postCard).join("")}</div>`;

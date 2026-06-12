@@ -300,4 +300,17 @@
   }
 
   document.addEventListener("keydown", onKonamiKey);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var toggle = document.getElementById("hint-toggle");
+    var panel = document.getElementById("easter-egg-hints");
+    if (!toggle || !panel) return;
+
+    toggle.addEventListener("click", function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.textContent = open ? "🎮 Hide hint" : "🎮 Hidden surprise?";
+    });
+  });
 })();
