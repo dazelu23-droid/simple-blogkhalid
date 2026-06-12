@@ -120,6 +120,7 @@
 .fish-layer {
   position: absolute;
   inset: 0;
+  z-index: 3;
 }
 
 .fish {
@@ -304,7 +305,7 @@
   opacity: 1;
 }
 
-[data-theme="dark"] .coral-tip,`r`n  [data-theme="dark"] .anemone-tip,`r`n  [data-theme="dark"] .fish.angler .fish-lure-glow {
+[data-theme="dark"] .fish.angler .fish-lure-glow {
   opacity: 0.9;
   fill: var(--fish-glow);
   filter: drop-shadow(0 0 8px var(--fish-glow));
@@ -345,11 +346,57 @@
 }
 
 
+/* Sea floor — anchors flora & mushrooms */
+.sea-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18%;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--sea-deep) 35%, transparent) 40%,
+    color-mix(in srgb, var(--sea-deep) 70%, var(--flora-stem)) 100%
+  );
+  transition: background 0.6s ease;
+}
+
+[data-theme="dark"] .sea-floor {
+  height: 22%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(4, 12, 28, 0.6) 30%,
+    #040c18 70%,
+    #020810 100%
+  );
+}
+
+[data-theme="dark"] .sea-floor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 80%, color-mix(in srgb, var(--flora-glow) 25%, transparent) 0%, transparent 8%),
+    radial-gradient(circle at 35% 65%, color-mix(in srgb, var(--coral-accent) 20%, transparent) 0%, transparent 6%),
+    radial-gradient(circle at 58% 90%, color-mix(in srgb, var(--flora-glow) 18%, transparent) 0%, transparent 5%),
+    radial-gradient(circle at 78% 72%, color-mix(in srgb, var(--coral-accent) 22%, transparent) 0%, transparent 7%),
+    radial-gradient(circle at 92% 85%, color-mix(in srgb, var(--flora-glow) 15%, transparent) 0%, transparent 4%);
+  animation: floor-glow-pulse 6s ease-in-out infinite;
+}
+
+@keyframes floor-glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
 /* Coral and flora layer */
 .flora-layer {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -434,6 +481,35 @@
 .flora-brain { width: 72px; height: 46px; }
 .flora-seaweed { width: 42px; height: 88px; }
 .flora-anemone { width: 52px; height: 62px; }
+.flora-fan { width: 64px; height: 78px; }
+.flora-sponge { width: 38px; height: 52px; }
+
+.coral-fan {
+  fill: var(--coral-light);
+  stroke: var(--coral-accent);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+.coral-fan-vein {
+  fill: none;
+  stroke: var(--coral-accent);
+  stroke-width: 0.8;
+  opacity: 0.45;
+}
+
+.sponge-body {
+  fill: var(--coral-main);
+  stroke: var(--coral-accent);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.sponge-pore {
+  fill: var(--coral-light);
+  opacity: 0.55;
+}
 
 .flora.sm { animation-name: flora-sway-sm; }
 .flora.tall { height: 110px; width: 52px; }
@@ -446,6 +522,8 @@
 .fl6 { left: 74%; animation-delay: -1.8s; }
 .fl7 { left: 84%; animation-delay: -2.2s; }
 .fl8 { left: 92%; animation-delay: -4s; }
+.fl9 { left: 36%; animation-delay: -2.5s; }
+.fl10 { left: 68%; animation-delay: -1.2s; }
 
 @keyframes flora-sway {
   0%, 100% { transform: rotate(-2deg); }
@@ -501,6 +579,31 @@
   opacity: 0.85;
 }
 
+[data-theme="dark"] .coral-fan {
+  fill: color-mix(in srgb, var(--coral-accent) 30%, var(--coral-main));
+  stroke: var(--coral-accent);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--coral-accent) 45%, transparent));
+}
+
+[data-theme="dark"] .coral-fan-vein {
+  stroke: var(--coral-accent);
+  opacity: 0.7;
+  filter: drop-shadow(0 0 2px var(--coral-accent));
+}
+
+[data-theme="dark"] .sponge-body {
+  fill: var(--coral-main);
+  stroke: var(--coral-accent);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--coral-accent) 35%, transparent));
+}
+
+[data-theme="dark"] .sponge-pore {
+  fill: var(--coral-accent);
+  opacity: 0.75;
+  filter: drop-shadow(0 0 4px var(--flora-glow));
+  animation: coral-tip-pulse 3.5s ease-in-out infinite;
+}
+
 @keyframes coral-tip-pulse {
   0%, 100% { opacity: 0.75; }
   50% { opacity: 1; }
@@ -510,6 +613,7 @@
 .mushroom-layer {
   position: absolute;
   inset: 0;
+  z-index: 2;
 }
 
 .mushroom {
@@ -631,7 +735,7 @@
   .m1, .m6 { opacity: 0.6; transform: scale(0.85); }
   .deep-glow { opacity: 0.35; }
   .f4, .f7 { display: none; }
-  .fl8 { display: none; }
+  .fl8, .fl10 { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -639,6 +743,7 @@
   .bubble,
   .mushroom,
   .deep-glow,
+  .sea-floor::before,
   .flora,
   .fish,
   .fish-tail,

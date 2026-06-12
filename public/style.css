@@ -704,7 +704,7 @@ body.secret-game-open { overflow: hidden; }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .secret-game-header h2 {
@@ -725,12 +725,6 @@ body.secret-game-open { overflow: hidden; }
 
 .secret-game-close:hover { color: var(--text); background: var(--border); }
 
-.secret-game-hint {
-  margin: 0 0 0.75rem;
-  color: var(--muted);
-  font-size: 0.875rem;
-}
-
 .secret-game-stats {
   display: flex;
   flex-wrap: wrap;
@@ -740,15 +734,154 @@ body.secret-game-open { overflow: hidden; }
   font-weight: 600;
 }
 
-#secret-game-canvas {
-  display: block;
+.secret-game-arena {
+  position: relative;
   width: 100%;
-  height: auto;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--bg) 70%, var(--surface));
+  max-width: 480px;
+  height: 360px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 3px solid var(--accent);
+  border-radius: 12px;
   touch-action: none;
   cursor: grab;
+  user-select: none;
+}
+
+.sg-arena-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #b8dff8 0%, #6eb8e8 55%, #3898d8 100%);
+  pointer-events: none;
+}
+
+.sg-arena-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+.sg-player {
+  position: absolute;
+  left: 0;
+  bottom: 14px;
+  width: 104px;
+  height: 32px;
+  border-radius: 10px 10px 6px 6px;
+  background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  z-index: 5;
+  will-change: transform;
+}
+
+.sg-player-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.sg-player-good {
+  background: linear-gradient(180deg, #22c55e, #15803d);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.65);
+}
+
+.sg-player-bad {
+  background: linear-gradient(180deg, #ef4444, #b91c1c);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.65);
+}
+
+.sg-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72px;
+  padding: 0.45rem 0.35rem 0.35rem;
+  border-radius: 12px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  text-align: center;
+  z-index: 2;
+  will-change: transform;
+}
+
+.sg-item-emoji {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+}
+
+.sg-item-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sg-item-points {
+  font-size: 0.62rem;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.sg-item-post {
+  background: #ffffff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+.sg-item-star {
+  background: #fef9c3;
+  border-color: #ca8a04;
+  color: #92400e;
+}
+
+.sg-item-trash {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #991b1b;
+}
+
+.sg-item-trash .sg-item-emoji {
+  animation: sg-trash-wiggle 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes sg-trash-wiggle {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
+}
+
+.sg-float {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-weight: 800;
+  pointer-events: none;
+  z-index: 10;
+  animation: sg-float-up 0.7s ease-out forwards;
+}
+
+.sg-float-good { color: #15803d; text-shadow: 0 1px 0 #fff; }
+.sg-float-bad { color: #b91c1c; text-shadow: 0 1px 0 #fff; }
+
+@keyframes sg-float-up {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to { opacity: 0; transform: translate(-50%, -36px); }
 }
 
 .secret-game-message {

@@ -94,11 +94,36 @@ function anemoneSvg(): string {
   </svg>`;
 }
 
+function fanCoralSvg(): string {
+  return `<svg class="flora-svg" viewBox="0 0 70 85" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="coral-stem" d="M35 85 L35 58"/>
+    <path class="coral-fan" d="M35 58 Q8 52 6 28 Q18 8 35 14 Q52 8 64 28 Q62 52 35 58 Z"/>
+    <path class="coral-fan-vein" d="M35 56 L35 18"/>
+    <path class="coral-fan-vein" d="M35 50 Q22 38 14 28"/>
+    <path class="coral-fan-vein" d="M35 50 Q48 38 56 28"/>
+    <path class="coral-fan-vein" d="M35 42 Q24 32 18 22"/>
+    <path class="coral-fan-vein" d="M35 42 Q46 32 52 22"/>
+  </svg>`;
+}
+
+function spongeSvg(): string {
+  return `<svg class="flora-svg" viewBox="0 0 45 58" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="sponge-body" d="M8 48 Q4 30 12 14 Q22 4 32 12 Q42 22 38 44 Q28 56 8 48 Z"/>
+    <circle class="sponge-pore" cx="18" cy="28" r="2"/>
+    <circle class="sponge-pore" cx="28" cy="22" r="1.8"/>
+    <circle class="sponge-pore" cx="24" cy="36" r="2.2"/>
+    <circle class="sponge-pore" cx="32" cy="32" r="1.6"/>
+    <circle class="sponge-pore" cx="16" cy="38" r="1.5"/>
+  </svg>`;
+}
+
 function flora(kind: string, classes: string): string {
   let svg = "";
   if (kind === "branch") svg = coralBranchSvg();
   else if (kind === "brain") svg = coralBrainSvg();
   else if (kind === "seaweed") svg = seaweedSvg();
+  else if (kind === "fan") svg = fanCoralSvg();
+  else if (kind === "sponge") svg = spongeSvg();
   else svg = anemoneSvg();
   return `<span class="flora flora-${kind} ${classes}">${svg}</span>`;
 }
@@ -162,6 +187,7 @@ export function layout(opts: LayoutOpts): string {
       <span class="deep-glow g2"></span>
       <span class="deep-glow g3"></span>
     </div>
+    <div class="sea-floor" aria-hidden="true"></div>
     <div class="fish-layer">
       ${fish("f1")}
       ${fish("f2 rev")}
@@ -181,6 +207,8 @@ export function layout(opts: LayoutOpts): string {
       ${flora("seaweed", "fl6")}
       ${flora("brain", "fl7 sm")}
       ${flora("anemone", "fl8 sm")}
+      ${flora("fan", "fl9")}
+      ${flora("sponge", "fl10 sm")}
     </div>
 
     <div class="mushroom-layer">

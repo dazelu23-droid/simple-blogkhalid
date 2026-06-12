@@ -11,66 +11,94 @@
     "KeyB",
     "KeyA",
   ];
+
+  var ITEM_TYPES = [
+    { id: "post", emoji: "\uD83D\uDCC4", label: "Post", points: 10, bad: false, weight: 5 },
+    { id: "star", emoji: "\u2B50", label: "Star", points: 15, bad: false, weight: 3 },
+    { id: "trash", emoji: "\uD83D\uDDD1\uFE0F", label: "Trash", points: -15, bad: true, weight: 2 },
+  ];
+
+  var ARENA_W = 480;
+  var ARENA_H = 360;
+  var PLAYER_W = 104;
+  var PLAYER_H = 32;
+  var PLAYER_BOTTOM = 14;
+  var HIGH_SCORE_KEY = "blog-secret-game-high";
+
   var konamiIndex = 0;
   var overlay = null;
+  var arena = null;
+  var player = null;
   var running = false;
   var rafId = 0;
+  var spawnId = 0;
+  var timerId = 0;
   var score = 0;
   var lives = 3;
   var timeLeft = 45;
-  var timerId = 0;
-  var paddleX = 0;
-  var paddleW = 72;
+  var combo = 0;
+  var playerX = 0;
   var items = [];
   var keys = { left: false, right: false };
-  var canvas = null;
-  var ctx = null;
-  var width = 0;
-  var height = 0;
-  var spawnId = 0;
-  var highScoreKey = "blog-secret-game-high";
-
-  var fallingTypes = [
-    { emoji: "📄", points: 10, bad: false },
-    { emoji: "💬", points: 5, bad: false },
-    { emoji: "⭐", points: 15, bad: false },
-    { emoji: "🗑️", points: -15, bad: true },
-  ];
+  var dragging = false;
+  var flashTimer = 0;
+  var flashClass = "";
 
   function getHighScore() {
-    return Number(localStorage.getItem(highScoreKey) || 0);
+    return Number(localStorage.getItem(HIGH_SCORE_KEY) || 0);
   }
 
   function setHighScore(value) {
-    localStorage.setItem(highScoreKey, String(value));
+    localStorage.setItem(HIGH_SCORE_KEY, String(value));
+  }
+
+  function pickItemType() {
+    var total = 0;
+    var i;
+    for (i = 0; i < ITEM_TYPES.length; i += 1) total += ITEM_TYPES[i].weight;
+    var roll = Math.random() * total;
+    for (i = 0; i < ITEM_TYPES.length; i += 1) {
+      roll -= ITEM_TYPES[i].weight;
+      if (roll <= 0) return ITEM_TYPES[i];
+    }
+    return ITEM_TYPES[0];
   }
 
   function buildOverlay() {
     if (overlay) return overlay;
+
     overlay = document.createElement("div");
     overlay.id = "secret-game-overlay";
     overlay.className = "secret-game-overlay";
     overlay.hidden = true;
     overlay.innerHTML =
-      '<div class="secret-game-modal" role="dialog" aria-modal="true" aria-label="Secret minigame">' +
+      '<div class="secret-game-modal" role="dialog" aria-modal="true" aria-label="Post Catcher minigame">' +
       '  <header class="secret-game-header">' +
-      '    <h2>📬 Post Catcher</h2>' +
+      "    <h2>\uD83D\uDCEC Post Catcher</h2>" +
       '    <button type="button" class="secret-game-close" aria-label="Close game">&times;</button>' +
       "  </header>" +
-      '  <p class="secret-game-hint">Catch posts &amp; stars. Avoid trash. Arrow keys or drag to move.</p>' +
       '  <div class="secret-game-stats">' +
       '    <span id="sg-score">Score: 0</span>' +
       '    <span id="sg-lives">Lives: 3</span>' +
       '    <span id="sg-time">Time: 45</span>' +
+      '    <span id="sg-combo">Combo: x1</span>' +
       '    <span id="sg-best">Best: ' +
       getHighScore() +
       "</span>" +
       "  </div>" +
-      '  <canvas id="secret-game-canvas" width="480" height="360" aria-label="Post Catcher play area"></canvas>' +
+      '  <div id="secret-game-arena" class="secret-game-arena" aria-label="Post Catcher play area">' +
+      '    <div class="sg-arena-bg" aria-hidden="true"></div>' +
+      '    <div id="sg-player" class="sg-player">' +
+      '      <span class="sg-player-label">Catcher</span>' +
+      "    </div>" +
+      "  </div>" +
       '  <div id="secret-game-message" class="secret-game-message"></div>' +
       '  <button type="button" id="secret-game-restart" class="btn btn-primary secret-game-restart">Play again</button>' +
       "</div>";
     document.body.appendChild(overlay);
+
+    arena = overlay.querySelector("#secret-game-arena");
+    player = overlay.querySelector("#sg-player");
 
     overlay.querySelector(".secret-game-close").addEventListener("click", closeGame);
     overlay.addEventListener("click", function (e) {
@@ -78,53 +106,54 @@
     });
     overlay.querySelector("#secret-game-restart").addEventListener("click", startGame);
 
-    canvas = overlay.querySelector("#secret-game-canvas");
-    ctx = canvas.getContext("2d");
-    resizeCanvas();
-
-    canvas.addEventListener("pointerdown", onPointerDown);
-    canvas.addEventListener("pointermove", onPointerMove);
-    canvas.addEventListener("pointerup", onPointerUp);
-    canvas.addEventListener("pointerleave", onPointerUp);
+    arena.addEventListener("pointerdown", onPointerDown);
+    arena.addEventListener("pointermove", onPointerMove);
+    arena.addEventListener("pointerup", onPointerUp);
+    arena.addEventListener("pointerleave", onPointerUp);
+    arena.addEventListener("pointercancel", onPointerUp);
 
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
-    window.addEventListener("resize", resizeCanvas);
 
     return overlay;
   }
 
-  function resizeCanvas() {
-    if (!canvas) return;
-    var rect = canvas.getBoundingClientRect();
-    width = canvas.width;
-    height = canvas.height;
-    paddleX = width / 2 - paddleW / 2;
+  function playerY() {
+    return ARENA_H - PLAYER_BOTTOM - PLAYER_H;
   }
 
-  var dragging = false;
+  function movePlayerTo(x) {
+    playerX = Math.max(0, Math.min(ARENA_W - PLAYER_W, x - PLAYER_W / 2));
+    player.style.transform = "translateX(" + playerX + "px)";
+  }
 
   function onPointerDown(e) {
+    if (!running) return;
     dragging = true;
-    movePaddleTo(e.offsetX);
+    arena.setPointerCapture(e.pointerId);
+    movePlayerTo(e.offsetX);
   }
 
   function onPointerMove(e) {
-    if (dragging) movePaddleTo(e.offsetX);
+    if (!running || !dragging) return;
+    movePlayerTo(e.offsetX);
   }
 
   function onPointerUp() {
     dragging = false;
   }
 
-  function movePaddleTo(x) {
-    paddleX = Math.max(0, Math.min(width - paddleW, x - paddleW / 2));
-  }
-
   function onKeyDown(e) {
-    if (!running) return;
-    if (e.code === "ArrowLeft" || e.code === "KeyA") keys.left = true;
-    if (e.code === "ArrowRight" || e.code === "KeyD") keys.right = true;
+    if (overlay && !overlay.hidden) {
+      if (e.code === "Escape") {
+        closeGame();
+        return;
+      }
+      if (!running) return;
+      if (e.code === "ArrowLeft" || e.code === "KeyA") keys.left = true;
+      if (e.code === "ArrowRight" || e.code === "KeyD") keys.right = true;
+      return;
+    }
   }
 
   function onKeyUp(e) {
@@ -136,10 +165,13 @@
     var scoreEl = overlay.querySelector("#sg-score");
     var livesEl = overlay.querySelector("#sg-lives");
     var timeEl = overlay.querySelector("#sg-time");
+    var comboEl = overlay.querySelector("#sg-combo");
     var bestEl = overlay.querySelector("#sg-best");
+    var multiplier = 1 + Math.floor(combo / 3);
     if (scoreEl) scoreEl.textContent = "Score: " + score;
     if (livesEl) livesEl.textContent = "Lives: " + lives;
     if (timeEl) timeEl.textContent = "Time: " + timeLeft;
+    if (comboEl) comboEl.textContent = "Combo: x" + multiplier;
     if (bestEl) bestEl.textContent = "Best: " + getHighScore();
   }
 
@@ -148,73 +180,121 @@
     if (msg) msg.textContent = text;
   }
 
+  function flashPlayer(kind) {
+    flashClass = kind;
+    player.classList.remove("sg-player-good", "sg-player-bad");
+    player.classList.add(kind === "good" ? "sg-player-good" : "sg-player-bad");
+    flashTimer = 12;
+  }
+
   function spawnItem() {
-    var type = fallingTypes[Math.floor(Math.random() * fallingTypes.length)];
+    if (!running) return;
+    var type = pickItemType();
+    var el = document.createElement("div");
+    el.className = "sg-item sg-item-" + type.id;
+    el.innerHTML =
+      '<span class="sg-item-emoji" aria-hidden="true">' +
+      type.emoji +
+      '</span><span class="sg-item-label">' +
+      type.label +
+      "</span><span class=\"sg-item-points\">" +
+      (type.bad ? type.points : "+" + type.points) +
+      "</span>";
+    arena.appendChild(el);
+
+    var itemW = el.offsetWidth;
+    var maxX = ARENA_W - itemW - 8;
     items.push({
-      x: 24 + Math.random() * (width - 48),
-      y: -24,
-      speed: 1.6 + Math.random() * 2.2,
-      size: 28,
+      el: el,
       type: type,
+      x: 8 + Math.random() * Math.max(8, maxX),
+      y: -el.offsetHeight - 4,
+      w: itemW,
+      h: el.offsetHeight,
+      speed: 1.3 + Math.random() * 1.2,
     });
   }
 
-  function draw() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, width, height);
+  function removeItem(item) {
+    if (item.el && item.el.parentNode) item.el.parentNode.removeChild(item.el);
+  }
 
-    ctx.fillStyle = "rgba(0,0,0,0.04)";
-    for (var i = 0; i < height; i += 24) {
-      ctx.fillRect(0, i, width, 1);
-    }
+  function showFloatText(x, text, kind) {
+    var el = document.createElement("span");
+    el.className = "sg-float sg-float-" + kind;
+    el.textContent = text;
+    el.style.left = x + "px";
+    el.style.top = playerY() - 18 + "px";
+    arena.appendChild(el);
+    setTimeout(function () {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, 700);
+  }
 
-    items.forEach(function (item) {
-      ctx.font = item.size + "px serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(item.type.emoji, item.x, item.y);
-    });
-
-    ctx.fillStyle = getComputedStyle(document.documentElement)
-      .getPropertyValue("--accent")
-      .trim() || "#4f6ef7";
-    var paddleY = height - 18;
-    ctx.beginPath();
-    ctx.roundRect(paddleX, paddleY, paddleW, 12, 6);
-    ctx.fill();
+  function rectsOverlap(a, b) {
+    return (
+      a.x < b.x + b.w &&
+      a.x + a.w > b.x &&
+      a.y < b.y + b.h &&
+      a.y + a.h > b.y
+    );
   }
 
   function tick() {
     if (!running) return;
 
-    var speed = 5;
-    if (keys.left) paddleX -= speed;
-    if (keys.right) paddleX += speed;
-    paddleX = Math.max(0, Math.min(width - paddleW, paddleX));
+    if (keys.left) movePlayerTo(playerX + PLAYER_W / 2 - 6);
+    if (keys.right) movePlayerTo(playerX + PLAYER_W / 2 + 6);
 
-    items.forEach(function (item) {
-      item.y += item.speed;
-    });
+    if (flashTimer > 0) {
+      flashTimer -= 1;
+      if (flashTimer === 0) {
+        player.classList.remove("sg-player-good", "sg-player-bad");
+      }
+    }
 
-    var paddleY = height - 18;
+    var paddle = {
+      x: playerX,
+      y: playerY(),
+      w: PLAYER_W,
+      h: PLAYER_H,
+    };
+
     var remaining = [];
     items.forEach(function (item) {
-      var caught =
-        item.y + item.size / 2 >= paddleY &&
-        item.y - item.size / 2 <= paddleY + 12 &&
-        item.x >= paddleX &&
-        item.x <= paddleX + paddleW;
+      item.y += item.speed;
+      item.el.style.transform = "translate(" + item.x + "px," + item.y + "px)";
+
+      var box = { x: item.x, y: item.y, w: item.w, h: item.h };
+      var caught = rectsOverlap(box, paddle);
 
       if (caught) {
-        score += item.type.points;
-        if (item.type.bad) lives -= 1;
+        if (item.type.bad) {
+          combo = 0;
+          lives -= 1;
+          score = Math.max(0, score + item.type.points);
+          flashPlayer("bad");
+          showFloatText(item.x + item.w / 2, String(item.type.points), "bad");
+        } else {
+          combo += 1;
+          var multiplier = 1 + Math.floor(combo / 3);
+          var gained = item.type.points * multiplier;
+          score += gained;
+          flashPlayer("good");
+          showFloatText(item.x + item.w / 2, "+" + gained, "good");
+        }
+        removeItem(item);
         updateStats();
         return;
       }
 
-      if (item.y - item.size / 2 > height) {
-        if (!item.type.bad) lives -= 1;
-        updateStats();
+      if (item.y > ARENA_H) {
+        if (!item.type.bad) {
+          combo = 0;
+          lives -= 1;
+          updateStats();
+        }
+        removeItem(item);
         return;
       }
 
@@ -227,28 +307,40 @@
       return;
     }
 
-    draw();
     rafId = requestAnimationFrame(tick);
+  }
+
+  function clearItems() {
+    items.forEach(removeItem);
+    items = [];
+    arena.querySelectorAll(".sg-float").forEach(function (el) {
+      el.parentNode.removeChild(el);
+    });
   }
 
   function startGame() {
     running = true;
     score = 0;
     lives = 3;
+    combo = 0;
     timeLeft = 45;
-    items = [];
-    paddleX = width / 2 - paddleW / 2;
     keys.left = false;
     keys.right = false;
+    dragging = false;
+    flashTimer = 0;
+    clearItems();
+    playerX = ARENA_W / 2 - PLAYER_W / 2;
+    player.style.transform = "translateX(" + playerX + "px)";
+    player.classList.remove("sg-player-good", "sg-player-bad");
     setMessage("");
     updateStats();
-    draw();
 
     clearInterval(spawnId);
     clearInterval(timerId);
     cancelAnimationFrame(rafId);
 
-    spawnId = setInterval(spawnItem, 850);
+    spawnItem();
+    spawnId = setInterval(spawnItem, 900);
     timerId = setInterval(function () {
       timeLeft -= 1;
       updateStats();
@@ -263,11 +355,9 @@
     clearInterval(spawnId);
     clearInterval(timerId);
     cancelAnimationFrame(rafId);
-
     if (score > getHighScore()) setHighScore(score);
     updateStats();
     setMessage(reason + " Final score: " + score + ".");
-    draw();
   }
 
   function openGame() {
@@ -282,6 +372,7 @@
     clearInterval(spawnId);
     clearInterval(timerId);
     cancelAnimationFrame(rafId);
+    clearItems();
     if (overlay) overlay.hidden = true;
     document.body.classList.remove("secret-game-open");
   }
@@ -310,7 +401,7 @@
       var open = panel.hidden;
       panel.hidden = !open;
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.textContent = open ? "🎮 Hide hint" : "🎮 Hidden surprise?";
+      toggle.textContent = open ? "\uD83C\uDFAE Hide hint" : "\uD83C\uDFAE Hidden surprise?";
     });
   });
 })();
